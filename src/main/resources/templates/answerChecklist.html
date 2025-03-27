@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checklist</title>
+    <style>
+        body {
+            background-image: url('/images/checklist_background.jpg');
+            background-size: cover;
+            background-position: center;
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            overflow: auto;
+        }
+
+        .content {
+            width: 90%;
+            max-width: 800px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        h2 {
+            color: #34495e;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .tab-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tab-btn {
+            padding: 10px 15px;
+            border: none;
+            background: #bdc3c7;
+            color: white;
+            font-size: 14px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .tab-btn.active {
+            background: #2980b9;
+            font-weight: bold;
+            box-shadow: 0px 0px 10px #2980b9;
+        }
+
+        .tab-btn:hover {
+            background: #3498db;
+        }
+
+        .questions-container {
+            display: none;
+            text-align: left;
+        }
+
+        .questions-container.active {
+            display: block;
+        }
+
+        .category h3 {
+            color: #2980b9;
+            font-size: 18px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .questions {
+            padding: 10px 10px;
+        }
+
+        .question-block {
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: #ecf0f1;
+            border-radius: 10px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        label, p {
+            font-size: 14px;
+            display: block;
+            margin-top: 10px;
+        }
+
+        input[type="radio"] {
+            margin-right: 5px;
+        }
+
+        .submit-btn, .return-btn {
+            margin-top: 20px;
+            padding: 12px 20px;
+            font-size: 14px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .submit-btn {
+            background-color: #2980b9;
+            color: white;
+            border: none;
+        }
+
+        .submit-btn:hover {
+            background-color: #1c5d91;
+        }
+
+        .return-btn {
+            background-color: #95a5a6;
+            color: white;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .return-btn:hover {
+            background-color: #7f8c8d;
+        }
+
+        .logo-container {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 1000;
+        }
+
+        .logo-container img {
+            width: 150px;
+            height: auto;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                width: 95%;
+                padding: 15px;
+            }
+
+            .tab-buttons {
+                flex-direction: column;
+            }
+
+            .tab-btn {
+                width: 100%;
+                padding: 8px;
+            }
+
+            .question-block {
+                padding: 8px;
+            }
+
+        }
+        .form-group {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 1.3rem; /* Bigger font size */
+            color: #00796b;
+        }
+
+        .styled-textarea {
+            width: 80%;
+            padding: 12px;
+            border: 3px solid #00796b; /* Thicker border */
+            border-radius: 10px;
+            font-size: 1.1rem; /* Bigger font */
+            resize: vertical;
+            min-height: 150px; /* Bigger default height */
+            max-height: 300px; /* Prevents it from becoming too large */
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .styled-textarea:focus {
+            border-color: #004d40;
+            box-shadow: 0 0 12px rgba(0, 121, 107, 0.6);
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="content">
+    <h2>Checklist</h2>
+
+    <!-- Tabs -->
+    <div class="tab-buttons">
+        <button class="tab-btn active" onclick="showTab(1)">Avant Induction Anesthésique</button>
+        <button class="tab-btn" onclick="showTab(2)">Avant Intervention Chirurgicale</button>
+        <button class="tab-btn" onclick="showTab(3)">Après Intervention</button>
+    </div>
+
+    <form th:action="@{/users/home/answerChecklist/{id}(id=${client.id})}" method="post">
+
+        <!-- Avant induction anesthésique -->
+        <div class="questions-container active" id="tab1">
+            <div class="category">
+                <h3>Avant induction anesthésique (temps de pause avant anesthésie) </h3>
+
+                <div class="questions">
+                    <p>1.</p>
+                    <div class="question-block">
+                        <label>L’identité de patients est correcte</label>
+                        <input type="radio" th:field="*{client.question1}" value="true"> Oui
+                        <input type="radio" th:field="*{client.question1}" value="false"> Non
+                    </div>
+
+                    <div class="question-block">
+                        <label>L’autorisation d'opérer est signée par les parents ou le représentant légal</label>
+                        <input type="radio" th:field="*{client.question2}" value="true"> Oui
+                        <input type="radio" th:field="*{client.question2}" value="false"> Non
+                    </div>
+                <p>2. L’intervention et le site opératoire sont confirmés :</p>
+
+                    <div class="question-block">
+                        <label>Idéalement par le patient et dans tous les cas par le dossier ou procédure spécifique</label>
+                        <input type="radio" th:field="*{client.question3}" value="true"> Oui
+                        <input type="radio" th:field="*{client.question3}" value="false"> Non
+                    </div>
+
+                    <div class="question-block">
+                        <label>La documentation clinique et para clinique nécessaire est disponible en salle</label>
+                        <input type="radio" th:field="*{client.question4}" value="true"> Oui
+                        <input type="radio" th:field="*{client.question4}" value="false"> Non
+                    </div>
+                    <p>3.</p>
+                    <div class="question-block">
+                        <label>Le mode d'installation est connu de l'équipe en salle, cohérent avec le site/l'intervention et non dangereux pour le patient</label>
+                        <input type="radio" th:field="*{client.question5}" value="true"> Oui
+                        <input type="radio" th:field="*{client.question5}" value="false"> Non
+                    </div>
+                    <p>4.</p>
+
+                    <div class="question-block">
+                        <label>La préparation cutanée de l'opéré est documentée dans la fiche de liaison du bloc opératoire</label>
+                        <input type="radio" th:field="*{client.question6}" value="true"> Oui
+                        <input type="radio" th:field="*{client.question6}" value="false"> Non
+                    </div>
+                <p>5. L’équipement/matériel nécessaires pour l'intervention sont vérifiés et adaptés au poids et à la taille du patient :</p>
+
+                    <div class="question-block">
+                        <label>Pour la partie chirurgicale</label>
+                        <input type="radio" th:field="*{client.question7}" value="true"> Oui
+                        <input type="radio" th:field="*{client.question7}" value="false"> Non
+                    </div>
+
+                    <div class="question-block">
+                        <label>Pour la partie anesthésique</label>
+                        <input type="radio" th:field="*{client.question8}" value="true"> Oui
+                        <input type="radio" th:field="*{client.question8}" value="false"> Non
+                    </div>
+                <p>6. Le patient présente-t-il :</p>
+
+                    <div class="question-block">
+                        <label>Un risque allergique</label>
+                        <input type="radio" th:field="*{client.question9}" value="true"> Oui
+                        <input type="radio" th:field="*{client.question9}" value="false"> Non
+                    </div>
+
+                    <div class="question-block">
+                        <label>Risque d'inhalation, de difficulté d'intubation ou ventilation au masque</label>
+                        <input type="radio" th:field="*{client.question10}" value="true"> Oui
+                        <input type="radio" th:field="*{client.question10}" value="false"> Non
+                    </div>
+
+                    <div class="question-block">
+                        <label>Risque de saignement important</label>
+                        <input type="radio" th:field="*{client.question11}" value="true"> Oui
+                        <input type="radio" th:field="*{client.question11}" value="false"> Non
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Avant intervention chirurgicale -->
+        <div class="questions-container" id="tab2">
+            <div class="category">
+                <h3>Avant intervention chirurgicale (temps de pause avant incision)</h3>
+                <div class="questions">
+                    <p>7. Vérification ultime croisée au sein de l'équipe en présence des chirurgiens anesthésistes, infirmiers :</p>
+
+                    <div class="question-block">
+                        <label>Identité patient confirmée</label>
+                        <input type="radio" th:field="*{client.question12}" value="true"> Oui
+                        <input type="radio" th:field="*{client.question12}" value="false"> Non
+                    </div>
+
+                    <div class="question-block">
+                        <label>Intervention prévue confirmée, site opératoire confirmé</label>
+                        <input type="radio" th:field="*{client.question13}" value="true"> Oui
+                        <input type="radio" th:field="*{client.question13}" value="false"> Non
+                    </div>
+
+                    <div class="question-block">
+                        <label>Installation correcte confirmée</label>
+                        <input type="radio" th:field="*{client.question14}" value="true"> Oui
+                        <input type="radio" th:field="*{client.question14}" value="false"> Non
+                    </div>
+
+                    <div class="question-block">
+                        <label>Documents nécessaires disponibles (notamment imagerie)</label>
+                        <input type="radio" th:field="*{client.question15}" value="true"> Oui
+                        <input type="radio" th:field="*{client.question15}" value="false"> Non
+                    </div>
+                    <p>8. Partage des informations essentielles oralement au sein de l'équipe sur les éléments à risque et ta critique de l'intervention (Time Out)</p>
+
+                    <div class="question-block">
+                        <label>Sur le plan chirurgical :</label>
+                        <input type="radio" th:field="*{client.question16}" value="true"> Oui
+                        <input type="radio" th:field="*{client.question16}" value="false"> Non
+                    </div>
+
+                    <div class="question-block">
+                        <label>Sur le plan anesthésique :</label>
+                        <input type="radio" th:field="*{client.question17}" value="true"> Oui
+                        <input type="radio" th:field="*{client.question17}" value="false"> Non
+                    </div>
+
+                    <div class="question-block">
+                        <label>L’antibioprophylaxie a été effectuée selon les recommandations et le protocole en vigueur dans l'établissement</label>
+                        <input type="radio" th:field="*{client.question18}" value="true"> Oui
+                        <input type="radio" th:field="*{client.question18}" value="false"> Non
+                    </div>
+
+                    <div class="question-block">
+                        <label>La préparation du champ opératoire est réalisée selon le protocole en vigueur dans l'établissement</label>
+                        <input type="radio" th:field="*{client.question19}" value="true"> Oui
+                        <input type="radio" th:field="*{client.question19}" value="false"> Non
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Après intervention -->
+        <div class="questions-container" id="tab3">
+            <div class="category">
+                <h3>Après intervention (pose avant sortie de salle d'opération)</h3>
+                <div class="questions">
+                    <p>9. Confirmation orale par le personnel auprès de l'équipe :</p>
+
+                    <div class="question-block">
+                        <label>De l'intervention enregistrée</label>
+                        <input type="radio" th:field="*{client.question20}" value="true"> Oui
+                        <input type="radio" th:field="*{client.question20}" value="false"> Non
+                    </div>
+
+                    <div class="question-block">
+                        <label>Du compte final correct des compresses, aiguilles, instruments, etc.</label>
+                        <input type="radio" th:field="*{client.question21}" value="true"> Oui
+                        <input type="radio" th:field="*{client.question21}" value="false"> Non
+                    </div>
+
+                    <div class="question-block">
+                        <label>De l'étiquetage des prélèvements, pièces opératoires, etc.</label>
+                        <input type="radio" th:field="*{client.question22}" value="true"> Oui
+                        <input type="radio" th:field="*{client.question22}" value="false"> Non
+                    </div>
+                    <p>10 .</p>
+                    <div class="question-block">
+                        <label>Si des événements indésirables ou porteurs de risques médicaux sont survenus : ont-ils fait l'objet d'une notification dans les systèmes de sécurité (signalement, retours d'expérience) ?</label>
+                        <input type="radio" th:field="*{client.question23}" value="true"> Oui
+                        <input type="radio" th:field="*{client.question23}" value="false"> Non
+                    </div>
+                    <div class="form-group">
+                        <label for="comment">📝 des événements indésirables à déclarer :</label>
+                        <textarea id="comment" name="comment" th:field="*{client.comment}" class="styled-textarea" required></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Submit and Return Buttons -->
+        <div>
+            <button type="submit" class="submit-btn">Soumettre </button>
+            <a href="/users/home" class="return-btn">Retour à la liste des patients</a>
+        </div>
+    </form>
+</div>
+
+<script>
+    function showTab(tabNumber) {
+        let tabs = document.querySelectorAll('.questions-container');
+        let buttons = document.querySelectorAll('.tab-btn');
+
+        tabs.forEach((tab, index) => {
+            tab.classList.remove('active');
+            buttons[index].classList.remove('active');
+        });
+
+        document.getElementById('tab' + tabNumber).classList.add('active');
+        buttons[tabNumber - 1].classList.add('active');
+    }
+</script>
+
+</body>
+</html>
