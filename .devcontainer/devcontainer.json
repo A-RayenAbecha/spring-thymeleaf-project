@@ -1,0 +1,17 @@
+{
+    "name": "springboot-thymeleaf-mysql",
+    "build": {
+      "dockerfile": "Dockerfile"
+    },
+    "forwardPorts": [8089, 3306, 8081],
+    "postCreateCommand": "sudo service mysql start && mvn clean install",
+    "customizations": {
+      "vscode": {
+        "extensions": [
+          "vscjava.vscode-java-pack",
+          "ms-azuretools.vscode-docker"
+        ]
+      }
+    }
+  }
+  
