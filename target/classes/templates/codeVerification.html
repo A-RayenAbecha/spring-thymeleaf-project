@@ -2,6 +2,7 @@
 <html lang="fr" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Vérification de Code</title>
+    <link rel="icon" type="image/png" th:href="@{/images/logo.png}" />
     <style>
         /* Import Google Font */
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
@@ -107,7 +108,7 @@
 <div class="container">
     <h2>Vérification de Code</h2>
     <form th:action="@{/users/verify}" method="post">
-        <input type="text" name="code" placeholder="Entrez le code de service" required>
+        <input type="password" name="code" placeholder="Entrez le code de service" required>
         <button type="submit">Vérifier</button>
     </form>
     <p th:if="${error}" class="error-message" th:text="${error}"></p>
