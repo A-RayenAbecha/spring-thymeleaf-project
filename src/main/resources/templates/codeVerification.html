@@ -107,7 +107,7 @@
 <div class="container">
     <h2>Vérification de Code</h2>
     <form th:action="@{/users/verify}" method="post">
-        <input type="text" name="code" placeholder="Entrez le code de service" required>
+        <input type="password" name="code" placeholder="Entrez le code de service" required>
         <button type="submit">Vérifier</button>
     </form>
     <p th:if="${error}" class="error-message" th:text="${error}"></p>

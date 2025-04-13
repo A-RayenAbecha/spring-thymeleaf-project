@@ -1,10 +1,10 @@
 package com.example.aziz.entity;
 
 public enum Role {
-    MEDICIN,
-    INFIRMIER,
+    MÉDECIN,
+    INFIRMIÈR_INFIRMIÈRE ,
     INSTRUMENTISTE,
-    MEDECIN_ANESTHESISTE,
-    TECHNICIEN_ANESTHESISTE,
-    RESIDENT
+    MÉDECIN_ANESTHÉSISTE,
+    TECHNICIEN_ANESTHÉSISTE,
+    RÉSIDENT
 }
