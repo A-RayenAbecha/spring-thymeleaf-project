@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="fr">
+<head>
+    <title>Login</title>
+    <style>
+        /* Body background with hospital image */
+        body {
+            background: url('/images/hospital.jpg') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        /* Container for login box */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Box styling for the login form */
+        .login-box {
+            background-color: rgba(255, 255, 255, 0.85); /* Semi-transparent white background */
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 380px;
+            text-align: center;
+        }
+
+        /* Title styling */
+        h2 {
+            color: #0B3B37FF; /* Teal color */
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+            text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Input fields styling */
+        input {
+            width: 100%; /* Ensures all input fields have the same width */
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 1rem;
+            outline: none;
+            box-sizing: border-box; /* Ensures padding and border are included in the width */
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            border-color: #0B3B37FF; /* Focus color for inputs */
+            box-shadow: 0 0 10px rgba(0, 121, 107, 0.3);
+        }
+
+        /* Button styling */
+        button {
+            width: 100%; /* Ensures button has the same width as inputs */
+            padding: 12px;
+            background-color: #0B3B37FF; /* Teal color */
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-sizing: border-box; /* Ensures padding and border are included in the width */
+        }
+
+        button:hover {
+            background-color: #0B3B37FF; /* Darker teal on hover */
+        }
+
+        /* Register link styling */
+        a {
+            text-decoration: none;
+            color: #0B3B37FF;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-top: 20px;
+            display: inline-block;
+        }
+
+        a:hover {
+            color: #004d40; /* Darker green on hover */
+        }
+
+        /* Error message styling */
+        .error-message {
+            color: red;
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+        .logo-container {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 1000; /* Ensures it stays on top */
+        }
+
+        .logo-container img {
+            width: 200px; /* Increase size */
+            height: auto;
+        }
+
+
+    </style>
+</head>
+<body>
+<header class="logo-container">
+    <img src="/images/logo.png" alt="Logo">
+</header>
+
+
+<div class="login-container">
+    <div class="login-box">
+        <h2>Connexion</h2>
+
+
+        <!-- Error message -->
+        <div th:if="${param.error}" class="error-message">
+            <p>Nom d'utilisateur ou mot de passe invalide .</p>
+        </div>
+
+        <form method="post" th:action="@{/users/login}">
+            <div>
+                <label for="username">Nom d'utilisateur:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div>
+                <label for="password">Mot de passe:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit">Connexion</button>
+        </form>
+
+        <a href="/users/register">Vous n'avez pas de compte ? Inscrivez-vous</a>
+    </div>
+</div>
+
+</body>
+</html>

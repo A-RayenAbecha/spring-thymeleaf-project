@@ -1,0 +1,14 @@
+C:\Users\21623\Desktop\Aziz\src\main\java\com\example\aziz\AzizApplication.java
+C:\Users\21623\Desktop\Aziz\src\main\java\com\example\aziz\controller\UserController.java
+C:\Users\21623\Desktop\Aziz\src\main\java\com\example\aziz\entity\Client.java
+C:\Users\21623\Desktop\Aziz\src\main\java\com\example\aziz\entity\Intervention.java
+C:\Users\21623\Desktop\Aziz\src\main\java\com\example\aziz\entity\Role.java
+C:\Users\21623\Desktop\Aziz\src\main\java\com\example\aziz\entity\User.java
+C:\Users\21623\Desktop\Aziz\src\main\java\com\example\aziz\repository\ClientRepository.java
+C:\Users\21623\Desktop\Aziz\src\main\java\com\example\aziz\repository\InterventionRepository.java
+C:\Users\21623\Desktop\Aziz\src\main\java\com\example\aziz\repository\UserRepository.java
+C:\Users\21623\Desktop\Aziz\src\main\java\com\example\aziz\security\SecurityConfig.java
+C:\Users\21623\Desktop\Aziz\src\main\java\com\example\aziz\service\ClientService.java
+C:\Users\21623\Desktop\Aziz\src\main\java\com\example\aziz\service\CustomUserDetailsService.java
+C:\Users\21623\Desktop\Aziz\src\main\java\com\example\aziz\service\InterventionService.java
+C:\Users\21623\Desktop\Aziz\src\main\java\com\example\aziz\service\UserService.java

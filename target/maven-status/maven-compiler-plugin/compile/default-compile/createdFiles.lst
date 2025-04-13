@@ -1,0 +1,14 @@
+com\example\aziz\service\UserService.class
+com\example\aziz\AzizApplication.class
+com\example\aziz\repository\InterventionRepository.class
+com\example\aziz\entity\User.class
+com\example\aziz\service\CustomUserDetailsService.class
+com\example\aziz\repository\UserRepository.class
+com\example\aziz\entity\Client.class
+com\example\aziz\controller\UserController.class
+com\example\aziz\repository\ClientRepository.class
+com\example\aziz\entity\Role.class
+com\example\aziz\security\SecurityConfig.class
+com\example\aziz\entity\Intervention.class
+com\example\aziz\service\ClientService.class
+com\example\aziz\service\InterventionService.class

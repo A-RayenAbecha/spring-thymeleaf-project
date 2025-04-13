@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intervention Form</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('/images/salle.webp') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            max-width: 420px;
+            width: 100%;
+            text-align: center;
+        }
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .form-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        label {
+            width: 45%;
+            font-weight: bold;
+            text-align: left;
+        }
+        input {
+            width: 50%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        input[readonly] {
+            background-color: #e9ecef;
+            cursor: not-allowed;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.3s ease;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        iframe {
+            width: 100%;
+            max-width: 560px;
+            height: 315px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Remplissage du checklist</h2>
+    <form th:action="@{/users/intervention/save}" th:object="${intervention}" method="post">
+        <input type="hidden" name="clientId" th:value="${clientId}">
+
+        <div class="form-group">
+            <label for="ordre">Ordre de l'intervention:</label>
+            <input type="number" id="ordre" name="ordre"
+                   th:value="${intervention.ordre}"
+                   th:readonly="${isUpdate}" required>
+        </div>
+
+        <div class="error" th:if="${#fields.hasErrors('ordre')}" th:errors="*{ordre}"></div>
+
+        <div class="form-group">
+            <label for="salle">Salle:</label>
+            <input type="number" id="salle" th:field="*{salle}" min="1" required>
+        </div>
+        <div class="error" th:if="${#fields.hasErrors('salle')}" th:errors="*{salle}"></div>
+
+        <div class="form-group">
+            <label for="heure">Heure:</label>
+            <input type="text" id="heure" th:value="${intervention.heure}" readonly>
+        </div>
+
+        <div class="form-group">
+            <label for="date">Date:</label>
+            <input type="text" id="date" th:value="${intervention.date}" readonly>
+        </div>
+
+        <button type="submit">Suivant</button>
+        <a href="/users/home" class="back-link">← Retour aux patients</a>
+
+    </form>
+    <!-- 🎥 YouTube Video Section -->
+    <h3>Tutoriel sur la Check-list au bloc opératoire</h3>
+    <iframe
+            src="https://www.youtube-nocookie.com/embed/hV0-WS2dkMs"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+    </iframe>
+</div>
+
+</body>
+</html>
