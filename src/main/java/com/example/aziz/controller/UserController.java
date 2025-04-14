@@ -37,7 +37,7 @@ public class UserController {
     @Autowired
     InterventionService interventionService;
 
-    private static final String SECRET_CODE = "1234"; // Secure this properly
+    private static final String SECRET_CODE = "Aziz1234"; // Secure this properly
 
     @GetMapping("/verify") // Accessible at /users/verify
     public String showVerificationPage(HttpSession session) {
