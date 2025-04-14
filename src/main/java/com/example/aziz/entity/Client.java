@@ -11,7 +11,7 @@ public class Client {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long numMat;
+    private String numMat;
     private String comment;
 
     @NotNull(message = "Name cannot be null")
@@ -319,11 +319,11 @@ public class Client {
         this.question24 = question24;
     }
 
-    public Long getNumMat() {
+    public String getNumMat() {
         return numMat;
     }
 
-    public void setNumMat(Long numMat) {
+    public void setNumMat(String numMat) {
         this.numMat = numMat;
     }
 

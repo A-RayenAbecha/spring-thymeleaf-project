@@ -261,6 +261,29 @@
         table tr:hover {
             background-color: #e0f2f1;
         }
+        /* Responsive table wrapper */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin-top: 20px;
+            border-radius: 10px;
+        }
+
+        /* Make sure the action buttons stack on small screens */
+        @media (max-width: 576px) {
+            table th, table td {
+                white-space: nowrap; /* Prevent line breaks in cells */
+            }
+
+            .update-client-btn {
+                display: block;
+                margin-bottom: 5px;
+                padding: 10px;
+                font-size: 0.9rem;
+            }
+        }
+
 
         /* Add and Update buttons */
         .add-client-btn, .update-client-btn {
@@ -358,6 +381,7 @@
     <a href="/users/clients/add" class="add-client-btn">Ajouter un nouveau patient</a>
 
     <!-- Client List Table -->
+    <div class="table-responsive">
     <table>
         <thead>
         <tr>
@@ -365,9 +389,7 @@
             <th>Numéro CIN (patient)</th>
             <th>Date de naissance (patient)</th>
             <th>Numero Matricule (patient)</th>
-            <th>Créé par (Prénom)</th>
-            <th>Créé par (Nom de famille)</th>
-            <th>Numéro d'intervention</th>
+            <th>Créé par </th>
             <th>Numéro de salle</th>
             <th>Date et heure de la dernière intervention</th>
             <th>Actions</th>
@@ -379,9 +401,7 @@
             <td th:text="${client.insuranceNumber}"></td>
             <td th:text="${client.dateOfBirth}"></td>
             <td th:text="${client.numMat != null ? client.numMat : 'N/A'}"></td>
-            <td th:text="${client.user != null ? client.user.firstName : 'N/A'}"></td>
-            <td th:text="${client.user != null ? client.user.lastName : 'N/A'}"></td>
-            <td th:text="${client.intervention != null ? client.intervention.ordre : 'N/A'}"></td>
+            <td th:text="${client.user != null ? client.user.firstName+' '+client.user.lastName : 'N/A'}"></td>
             <td th:text="${client.intervention != null ? client.intervention.salle : 'N/A'}"></td>
             <td th:text="${client.intervention != null ? client.intervention.date + ' ' + client.intervention.heure : 'N/A'}"></td>
             <td>
@@ -393,65 +413,62 @@
         </tr>
         </tbody>
     </table>
+    </div>
+
 </div>
 
 <!-- Stats Container -->
 <div class="container">
-    <h2>Statistiques des Questions Médicales</h2>
+    <h2>Statistiques des Questions </h2>
     <div class="stats-container">
         <!-- Question Statistics - Modify these blocks as below -->
 
-        <div class="question-block">
-            <h4>Nombre de patients pour lesquels l’équipement/matériel nécessaire à l’intervention a été vérifié et adapté au poids et à la taille du patient pour la partie chirurgicale ?</h4>
-            <div class="question-stats">
-                <div> <span th:text="${#numbers.formatDecimal(question7Percentage, 1, 2)} + '%'"></span></div>
-            </div>
-        </div>
+
 
         <div class="question-block">
-            <h4>Nombre de patients pour lesquels l’équipement/matériel nécessaire à l’intervention a été vérifié et adapté au poids et à la taille du patient pour la partie anesthésique</h4>
+            <h4>Nombre de patients pour lesquels l’identité a été correctement vérifiée</h4>
             <div class="question-stats">
                 <div> <span th:text="${#numbers.formatDecimal(question1Percentage, 1, 2)} + '%'"></span></div>
             </div>
         </div>
 
         <div class="question-block">
-            <h4>Nombre de patients pour lesquels l’équipement/matériel nécessaire à l’intervention a été vérifié et adapté au poids et à la taille du patient pour la partie anesthésique</h4>
+            <h4>Nombre de patients pour lesquels l’autorisation d’opérer a été signée par les parents ou le représentant légal</h4>
             <div class="question-stats">
                 <div> <span th:text="${#numbers.formatDecimal(question2Percentage, 1, 2)} + '%'"></span></div>
             </div>
         </div>
 
         <div class="question-block">
-            <h4>Nombre de patients pour lesquels l’équipement/matériel nécessaire à l’intervention a été vérifié et adapté au poids et à la taille du patient pour la partie anesthésique</h4>
+            <h4>Nombre de patients pour lesquels l’intervention et le site opératoire ont été confirmés par le patient ou via la procédure dédiée</h4>
             <div class="question-stats">
                 <div> <span th:text="${#numbers.formatDecimal(question3Percentage, 1, 2)} + '%'"></span></div>
             </div>
         </div>
 
         <div class="question-block">
-            <h4>Nombre de patients pour lesquels l’équipement/matériel nécessaire à l’intervention a été vérifié et adapté au poids et à la taille du patient pour la partie anesthésique</h4>
+            <h4>Nombre de patients pour lesquels la documentation clinique et para-clinique nécessaire était disponible en salle</h4>
             <div class="question-stats">
                 <div> <span th:text="${#numbers.formatDecimal(question4Percentage, 1, 2)} + '%'"></span></div>
             </div>
         </div>
 
         <div class="question-block">
-            <h4>Nombre de patients pour lesquels l’équipement/matériel nécessaire à l’intervention a été vérifié et adapté au poids et à la taille du patient pour la partie anesthésique</h4>
+            <h4>Nombre de patients pour lesquels le mode d’installation était connu de l’équipe, cohérent avec l’intervention et non dangereux</h4>
             <div class="question-stats">
                 <div> <span th:text="${#numbers.formatDecimal(question5Percentage, 1, 2)} + '%'"></span></div>
             </div>
         </div>
 
         <div class="question-block">
-            <h4>Nombre de patients pour lesquels l’équipement/matériel nécessaire à l’intervention a été vérifié et adapté au poids et à la taille du patient pour la partie anesthésique</h4>
+            <h4>Nombre de patients pour lesquels la préparation cutanée a été documentée dans la fiche de liaison du bloc opératoire</h4>
             <div class="question-stats">
                 <div> <span th:text="${#numbers.formatDecimal(question6Percentage, 1, 2)} + '%'"></span></div>
             </div>
         </div>
 
         <div class="question-block">
-            <h4>Nombre de patients pour lesquels l’équipement/matériel nécessaire à l’intervention a été vérifié et adapté au poids et à la taille du patient pour la partie anesthésique</h4>
+            <h4>Nombre de patients pour lesquels l’équipement/matériel nécessaire à l’intervention a été vérifié et adapté au poids et à la taille du patient pour la partie chirurgicale</h4>
             <div class="question-stats">
                 <div> <span th:text="${#numbers.formatDecimal(question7Percentage, 1, 2)} + '%'"></span></div>
             </div>
@@ -465,63 +482,64 @@
         </div>
 
         <div class="question-block">
-            <h4>Nombre de patients présentant un risque allergique</h4>
+            <h4>Nombre de patients présentant un risque allergique identifié</h4>
             <div class="question-stats">
                 <div> <span th:text="${#numbers.formatDecimal(question9Percentage, 1, 2)} + '%'"></span></div>
             </div>
         </div>
 
         <div class="question-block">
-            <h4>Nombre de patients présentant un risque d'inhalation, de difficulté d'intubation ou de ventilation au masque</h4>
+            <h4>Nombre de patients présentant un risque d’inhalation, de difficulté d’intubation ou de ventilation au masque identifié</h4>
             <div class="question-stats">
                 <div> <span th:text="${#numbers.formatDecimal(question10Percentage, 1, 2)} + '%'"></span></div>
             </div>
         </div>
 
         <div class="question-block">
-            <h4>Nombre de patients présentant un risque de saignement important</h4>
+            <h4>Nombre de patients présentant un risque de saignement important évalué</h4>
             <div class="question-stats">
                 <div> <span th:text="${#numbers.formatDecimal(question11Percentage, 1, 2)} + '%'"></span></div>
             </div>
         </div>
 
         <div class="question-block">
-            <h4>Nombre de patients pour lesquels l’équipement/matériel nécessaire à l’intervention a été vérifié et adapté au poids et à la taille du patient pour la partie anesthésique</h4>
+            <h4>Nombre de patients pour lesquels l’identité a été confirmée lors de la vérification ultime croisée par l’équipe (chirurgien, anesthésiste, infirmiers)</h4>
             <div class="question-stats">
                 <div> <span th:text="${#numbers.formatDecimal(question12Percentage, 1, 2)} + '%'"></span></div>
             </div>
         </div>
 
         <div class="question-block">
-            <h4>Nombre de patients pour lesquels l’équipement/matériel nécessaire à l’intervention a été vérifié et adapté au poids et à la taille du patient pour la partie anesthésique</h4>
+            <h4>Nombre de patients pour lesquels l’intervention prévue et le site opératoire ont été confirmés lors de la vérification ultime croisée en présence du chirurgien, anesthésiste et infirmiers</h4>
             <div class="question-stats">
                 <div> <span th:text="${#numbers.formatDecimal(question13Percentage, 1, 2)} + '%'"></span></div>
             </div>
         </div>
 
         <div class="question-block">
-            <h4>Nombre de patients pour lesquels l’équipement/matériel nécessaire à l’intervention a été vérifié et adapté au poids et à la taille du patient pour la partie anesthésique</h4>
+            <h4>Nombre de patients pour lesquels l’installation a été confirmée comme correcte lors de la vérification ultime croisée en présence de l’équipe</h4>
             <div class="question-stats">
                 <div> <span th:text="${#numbers.formatDecimal(question14Percentage, 1, 2)} + '%'"></span></div>
             </div>
         </div>
 
         <div class="question-block">
-            <h4>Nombre de patients pour lesquels l’équipement/matériel nécessaire à l’intervention a été vérifié et adapté au poids et à la taille du patient pour la partie anesthésique</h4>
+            <h4>Nombre de patients pour lesquels les documents nécessaires (notamment imagerie) étaient disponibles lors de la vérification ultime croisée en présence de l’équipe</h4>
             <div class="question-stats">
                 <div> <span th:text="${#numbers.formatDecimal(question15Percentage, 1, 2)} + '%'"></span></div>
             </div>
         </div>
-
         <div class="question-block">
-            <h4>Nombre de patients pour lesquels l’équipement/matériel nécessaire à l’intervention a été vérifié et adapté au poids et à la taille du patient pour la partie anesthésique</h4>
+            <h4> Partage des informations essentielles (Time Out) :</h4>
+            <h4>Nombre de patients pour lesquels les éléments à risque et la critique de l’intervention ont été partagés oralement au sein de l’équipe sur le plan chirurgical</h4>
             <div class="question-stats">
                 <div> <span th:text="${#numbers.formatDecimal(question16Percentage, 1, 2)} + '%'"></span></div>
             </div>
         </div>
 
         <div class="question-block">
-            <h4>Nombre de patients pour lesquels l’équipement/matériel nécessaire à l’intervention a été vérifié et adapté au poids et à la taille du patient pour la partie anesthésique</h4>
+            <h4> Partage des informations essentielles (Time Out) :</h4>
+            <h4>Nombre de patients pour lesquels les éléments à risque et la critique de l’intervention ont été partagés oralement au sein de l’équipe sur le plan anesthésique</h4>
             <div class="question-stats">
                 <div> <span th:text="${#numbers.formatDecimal(question17Percentage, 1, 2)} + '%'"></span></div>
             </div>
@@ -529,61 +547,49 @@
 
 
         <div class="question-block">
-            <h4>Nombre de patients pour lesquels l’antibioprophylaxie a été effectuée selon les recommandations et le protocole en vigueur dans l'établissement</h4>
+            <h4> Partage des informations essentielles (Time Out) :</h4>
+            <h4>Nombre de patients pour lesquels l’antibioprophylaxie a été effectuée selon les recommandations et le protocole de l’établissement</h4>
             <div class="question-stats">
                 <div> <span th:text="${#numbers.formatDecimal(question18Percentage, 1, 2)} + '%'"></span></div>
             </div>
         </div>
 
         <div class="question-block">
-            <h4>Nombre de patients pour lesquels l’équipement/matériel nécessaire à l’intervention a été vérifié et adapté au poids et à la taille du patient pour la partie anesthésique</h4>
+            <h4> Partage des informations essentielles (Time Out) :</h4>
+            <h4>Nombre de patients pour lesquels la préparation du champ opératoire a été réalisée selon le protocole en vigueur dans l’établissement</h4>
             <div class="question-stats">
                 <div> <span th:text="${#numbers.formatDecimal(question19Percentage, 1, 2)} + '%'"></span></div>
             </div>
         </div>
 
+
         <div class="question-block">
-            <h4>Nombre de patients pour lesquels l’équipement/matériel nécessaire à l’intervention a été vérifié et adapté au poids et à la taille du patient pour la partie anesthésique</h4>
+            <h4>Nombre de patients pour lesquels l’intervention enregistrée a été confirmée oralement par le personnel auprès de l’équipe</h4>
             <div class="question-stats">
                 <div> <span th:text="${#numbers.formatDecimal(question20Percentage, 1, 2)} + '%'"></span></div>
             </div>
         </div>
 
         <div class="question-block">
-            <h4>Nombre de patients pour lesquels l’équipement/matériel nécessaire à l’intervention a été vérifié et adapté au poids et à la taille du patient pour la partie anesthésique</h4>
+            <h4>Nombre de patients pour lesquels le compte final des compresses, aiguilles, instruments, etc., a été confirmé comme correct oralement par le personnel auprès de l’équipe</h4>
             <div class="question-stats">
                 <div> <span th:text="${#numbers.formatDecimal(question21Percentage, 1, 2)} + '%'"></span></div>
             </div>
         </div>
 
         <div class="question-block">
-            <h4>Nombre de patients pour lesquels l’équipement/matériel nécessaire à l’intervention a été vérifié et adapté au poids et à la taille du patient pour la partie anesthésique</h4>
+            <h4>Nombre de patients pour lesquels l’étiquetage des prélèvements, pièces opératoires, etc., a été confirmé oralement par le personnel auprès de l’équipe</h4>
             <div class="question-stats">
                 <div> <span th:text="${#numbers.formatDecimal(question22Percentage, 1, 2)} + '%'"></span></div>
             </div>
         </div>
 
         <div class="question-block">
-            <h4>Nombre de patients pour lesquels l’équipement/matériel nécessaire à l’intervention a été vérifié et adapté au poids et à la taille du patient pour la partie anesthésique</h4>
+            <h4>Nombre d’événements indésirables ou porteurs de risques médicaux ayant fait l’objet d’une notification dans les systèmes de sécurité (signalement, retours d’expérience)</h4>
             <div class="question-stats">
                 <div> <span th:text="${#numbers.formatDecimal(question23Percentage, 1, 2)} + '%'"></span></div>
             </div>
         </div>
-
-        <div class="question-block">
-            <h4>Nombre de patients pour lesquels des événements indésirables ou porteurs de risques médicaux sont survenus et ont fait l'objet d'une notification dans les systèmes de sécurité (signalement, retours d'expérience)</h4>
-            <div class="question-stats">
-                <div> <span th:text="${#numbers.formatDecimal(question24Percentage, 1, 2)} + '%'"></span></div>
-            </div>
-        </div>
-
-
-
-
-
-
-
-
 
     </div>
 </div>
