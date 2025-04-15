@@ -24,6 +24,9 @@ public class UserService {
 
 
     public User createUser(User user) {
+        if (userRepository.existsByUsername(user.getUsername())) {
+            throw new IllegalArgumentException("Username is already taken!");
+        }
         // Encrypt the password before saving it
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);

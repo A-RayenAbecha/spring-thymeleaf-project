@@ -101,9 +101,15 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String registerUser(@ModelAttribute User user) {
-        userService.createUser(user);
-        return "redirect:/users/login";
+    public String registerUser(@ModelAttribute User user, Model model) {
+        try {
+            userService.createUser(user);
+            return "redirect:/users/login";
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("error", e.getMessage());
+            model.addAttribute("roles", Role.values());// "Username is already taken!"
+            return "register"; // return to the registration form view
+        }
     }
     @GetMapping("/home")
     public String home(Model model) {

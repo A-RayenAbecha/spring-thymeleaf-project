@@ -25,7 +25,10 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private Role role;  // Rôle de l'utilisateur (utilisation de l'énumération)
+
+    @Column(unique = true)
     private String username;
+
     private String password;
 
     @OneToMany(mappedBy = "user")
